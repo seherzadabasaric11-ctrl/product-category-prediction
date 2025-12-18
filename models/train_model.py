@@ -36,3 +36,24 @@ MODELS_DIR=BASE_DIR/"models"
 MODELS_DIR.mkdir(exist_ok=True)
 joblib.dump(model, MODELS_DIR /"product_category_model.pkl")
 print("Model uspjesno sacuvan u models/product_category_model.pkl")
+
+#FINAL MODEL (TF-IDF + Logistic Regression)
+
+from sklearn.linear_model import LogisticRegression
+from sklearn.metrics import classification_report
+
+final_model=Pipeline([("tfidf",TfidfVectorizer(lowercase=True,stop_words="english",max_features=5000)),("clf",LogisticRegression(max_iter=1000))])
+
+#Treniranje finalnog modela 
+final_model.fit(X_train,y_train)
+
+#Evaluacija
+y_pred_final=final_model.predict(X_test)
+print("\nFINAL MODEL RESULTS")
+print("Accuracy:",accuracy_score(y_test,y_pred_final))
+print("\nClassification report:\n")
+print(classification_report(y_test,y_pred_final,zero_division=0))
+
+#Spremanje FINALNOG modela 
+joblib.dump(final_model,MODELS_DIR/"final_model.pkl")
+print("\n FINAL model sacuvan u models/final_model.pkl")

@@ -1,5 +1,8 @@
+from pathlib import Path
 import joblib 
-MODEL_PATH="product_category_model.pkl"
+BASE_DIR=Path(__file__).resolve().parent
+MODEL_PATH=BASE_DIR /"final_model.pkl"
+model=joblib.load(MODEL_PATH)
 def main():
     print("Model se ucitava...")
     model=joblib.load(MODEL_PATH)
